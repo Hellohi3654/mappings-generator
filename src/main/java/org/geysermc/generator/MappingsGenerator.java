@@ -8,6 +8,7 @@ import com.google.gson.reflect.TypeToken;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.client.gui.screen.ingame.CreativeInventoryScreen;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -246,6 +247,11 @@ public class MappingsGenerator {
                 object.addProperty("bedrock_identifier", blockEntry.getBedrockIdentifier());
             }
             object.addProperty("block_hardness", state.getHardness(null, null));
+            if (state.getPistonBehavior() == PistonBehavior.DESTROY) {
+                object.addProperty("piston_behavior", "destroy");
+            } else if (state.getPistonBehavior() == PistonBehavior.BLOCK) {
+                object.addProperty("piston_behavior", "block");
+            }
             object.addProperty("can_break_with_hand", !state.isToolRequired());
             MINING_TOOL_ITEMS.forEach(item -> {
                 if (item.getMiningSpeedMultiplier(null, state) != 1.0f) {
