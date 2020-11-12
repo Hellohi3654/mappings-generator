@@ -247,11 +247,8 @@ public class MappingsGenerator {
                 object.addProperty("bedrock_identifier", blockEntry.getBedrockIdentifier());
             }
             object.addProperty("block_hardness", state.getHardness(null, null));
-            if (state.getPistonBehavior() == PistonBehavior.DESTROY) {
-                object.addProperty("piston_behavior", "destroy");
-            } else if (state.getPistonBehavior() == PistonBehavior.BLOCK) {
-                object.addProperty("piston_behavior", "block");
-            }
+            object.addProperty("piston_behavior", state.getPistonBehavior().toString().toLowerCase());
+
             object.addProperty("can_break_with_hand", !state.isToolRequired());
             MINING_TOOL_ITEMS.forEach(item -> {
                 if (item.getMiningSpeedMultiplier(null, state) != 1.0f) {
