@@ -246,8 +246,12 @@ public class MappingsGenerator {
             } else {
                 object.addProperty("bedrock_identifier", blockEntry.getBedrockIdentifier());
             }
+
             object.addProperty("block_hardness", state.getHardness(null, null));
-            object.addProperty("piston_behavior", state.getPistonBehavior().toString().toLowerCase());
+            PistonBehavior pistonBehavior = state.getPistonBehavior();
+            if (pistonBehavior != PistonBehavior.NORMAL) {
+                object.addProperty("piston_behavior", state.getPistonBehavior().toString().toLowerCase());
+            }
 
             object.addProperty("can_break_with_hand", !state.isToolRequired());
             MINING_TOOL_ITEMS.forEach(item -> {
