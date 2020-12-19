@@ -308,6 +308,10 @@ public class MappingsGenerator {
                 object.addProperty("piston_behavior", state.getPistonBehavior().toString().toLowerCase());
             }
 
+            if (state.getBlock().hasBlockEntity()) {
+                object.addProperty("has_block_entity", true);
+            }
+
             object.addProperty("can_break_with_hand", !state.isToolRequired());
             MINING_TOOL_ITEMS.forEach(item -> {
                 if (item.getMiningSpeedMultiplier(null, state) != 1.0f) {
