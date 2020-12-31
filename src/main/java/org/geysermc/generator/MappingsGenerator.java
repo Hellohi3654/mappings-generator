@@ -15,6 +15,8 @@ import com.nukkitx.nbt.NbtType;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.piston.PistonBehavior;
+import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.MiningToolItem;
@@ -304,6 +306,15 @@ public class MappingsGenerator {
             }
             // This points to the index of the collision in collision.json
             object.addProperty("collision_index", COLLISION_LIST.lastIndexOf(collisionBoxes));
+			
+			PistonBehavior pistonBehavior = state.getPistonBehavior();
+            if (pistonBehavior != PistonBehavior.NORMAL) {
+                object.addProperty("piston_behavior", state.getPistonBehavior().toString().toLowerCase());
+            }
+
+            if (state.getBlock().hasBlockEntity()) {
+                object.addProperty("has_block_entity", true);
+            }
 
             try {
                 // Ignore water, lava, and fire because players can't pick them
@@ -319,6 +330,7 @@ public class MappingsGenerator {
                 // The block's pick item depends on a block entity.
                 // Banners and Shulker Boxes both depend on the block entity.
             }
+
             object.addProperty("can_break_with_hand", !state.isToolRequired());
             MINING_TOOL_ITEMS.forEach(item -> {
                 if (item.getMiningSpeedMultiplier(null, state) != 1.0f) {
